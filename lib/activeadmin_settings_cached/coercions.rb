@@ -19,7 +19,7 @@ module ActiveadminSettingsCached
     end
 
     def cast_params(params)
-      coerced_params = params.to_unsafe_h.map do |name, value|
+      coerced_params = params.to_hash.map do |name, value|
         [name, cast_value(name, value)]
       end
 
