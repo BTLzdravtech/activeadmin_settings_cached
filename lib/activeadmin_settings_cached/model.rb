@@ -89,7 +89,7 @@ module ActiveadminSettingsCached
     protected
 
     def load_settings
-      settings_model.public_send(meth, attributes[:starting_with])
+      settings_model.public_send(meth, "#{Thread.current[:language].present? ? Thread.current[:language] + '|' : ''}#{attributes[:starting_with]}")
     end
 
     def load_settings_by_key
@@ -97,14 +97,7 @@ module ActiveadminSettingsCached
     end
 
     def has_key?
-      if attributes[:key].present?
-        true
-      elsif Thread.current[:language].present?
-        attributes[:key] = Thread.current[:language]
-        true
-      else
-        false
-      end
+      attributes[:key].present?
     end
 
     def clean_key(key)
