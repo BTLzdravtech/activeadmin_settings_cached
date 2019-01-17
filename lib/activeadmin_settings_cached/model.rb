@@ -97,7 +97,14 @@ module ActiveadminSettingsCached
     end
 
     def has_key?
-      attributes[:key].present?
+      if attributes[:key].present?
+        true
+      elsif Thread.current[:language].present?
+        attributes[:key] = Thread.current[:language]
+        true
+      else
+        false
+      end
     end
 
     def clean_key(key)
